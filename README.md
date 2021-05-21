@@ -14,7 +14,7 @@ node ./index.js
 
 ## Debugging
 
-This project is setup to run a debug mode using nodemon
+This project is setup to run a debug mode in VSCode using nodemon, just hit the start button in the 'Run and Debug' section.
 
 ## Docs
 
