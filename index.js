@@ -1,6 +1,10 @@
+require("dotenv").config();
+
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const pg = require("pg");
 
+// create app
 const app = express();
 const port = 3000;
 
@@ -9,8 +13,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+console.log(process.env);
+
+// db
+const Pool = pg.Pool;
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_DATABASE,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+});
+
 /* SIMPLE TEXT RESPONSE */
-app.get("/hello", (req, res) => {
+app.get("/hello", (_req, res) => {
   res.send("Hello World!"); // sends as text/html - text string is a valid HTML document
 });
 
@@ -26,10 +42,10 @@ app.use("/helloany", (req, res) => {
 
 /* MULTIPLE VERBS ON THE SAME PATH */
 // easier way to doing above
-app.get("/multiverb", (req, res) => {
+app.get("/multiverb", (_req, res) => {
   res.json({ method: "GET" });
 });
-app.post("/multiverb", (req, res) => {
+app.post("/multiverb", (_req, res) => {
   res.json({ method: "POST" });
 });
 
@@ -49,29 +65,35 @@ app.post("/multiverb", (req, res) => {
 
 */
 
-app.get("/posts", (req, res) => {
+app.get("/posts", async (_req, res) => {
   // Get list of posts
-  res.send("to be implemented");
+  try {
+    const result = await pool.query("SELECT * FROM posts ORDER BY id DESC"); // give me all the post in descending id order
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("500 Server Error");
+  }
 });
 
-app.get("/posts/:uid", (req, res) => {
+app.get("/posts/:uid", (_req, res) => {
   // Get post
   res.send("to be implemented");
 });
 
-app.post("/posts", (req, res) => {
+app.post("/posts", (_req, res) => {
   // create post
   res.send("to be implemented");
 });
 // some environments stop you returning any json in the body of a POST, and only allow the uid in the a response header
 // it you did want to return JSON in those cases you would have to use a PUT instead
 
-app.patch("/posts/:uid", (req, res) => {
+app.patch("/posts/:uid", (_req, res) => {
   // update post
   res.send("to be implemented");
 });
 
-app.delete("/posts/:uid", (req, res) => {
+app.delete("/posts/:uid", (_req, res) => {
   // delete post
   res.send("to be implemented");
 });
