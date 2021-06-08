@@ -16,6 +16,8 @@ node ./index.js
 
 Install Postgres using Postgres.app - <https://postgresapp.com/downloads.html>
 
+Then follow <https://postgresapp.com/documentation/cli-tools.html> to add the command line utilities to your path
+
 Start Postgres.app, then double click on the postgres database icon to get a terminal prompt in psql (you should see `postgres=>` in the prompt)
 
 ![postgres.app](./docs/images/postgresapp.png)
@@ -61,9 +63,7 @@ INSERT INTO posts (title, content)
 select * from posts;
 ```
 
-If you don't have postgres follow https://postgresapp.com/documentation/cli-tools.html to add the command line utilities to your path
-
-Note: if you have homebrew postgres (or any other postgres installation) installed as well you might need to run this from the postgres.app folder e.g. `/Applications/Postgres.app/Contents/Versions/latest/bin/psql`
+Note: if you have homebrew postgres (or any other postgres installation) installed as well you might need to run `psql` from the postgres.app folder e.g. `/Applications/Postgres.app/Contents/Versions/latest/bin/psql`
 
 If you do need to do this it's useful to add an alias to your shell (.bashrc or .zshr) of `alias psqlapp="/Applications/Postgres.app/Contents/Versions/latest/bin/psql"`
 
