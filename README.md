@@ -18,7 +18,7 @@ Install Postgres using Postgres.app - <https://postgresapp.com/downloads.html>
 
 Then follow <https://postgresapp.com/documentation/cli-tools.html> to add the command line utilities to your path
 
-Start Postgres.app, then double click on the postgres database icon to get a terminal prompt in psql (you should see `postgres=>` in the prompt)
+Start Postgres.app, hit Initialise to set up your postgres instance, then double click on the postgres database icon to get a terminal prompt in psql (you should see `postgres=>` in the prompt)
 
 ![postgres.app](./docs/images/postgresapp.png)
 
@@ -60,7 +60,7 @@ INSERT INTO posts (title, content)
   VALUES ('First Post', 'this is the first post'), ('Another Post', 'this is another post with some more text');
 
 # check we've created the posts
-select * from posts;
+SELECT * FROM posts;
 ```
 
 Note: if you have homebrew postgres (or any other postgres installation) installed as well you might need to run `psql` from the postgres.app folder e.g. `/Applications/Postgres.app/Contents/Versions/latest/bin/psql`
