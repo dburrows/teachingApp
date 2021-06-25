@@ -12,8 +12,7 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-console.log(process.env);
+app.use(express.static("public"));
 
 // db
 const Pool = pg.Pool;
@@ -65,7 +64,7 @@ app.post("/multiverb", (_req, res) => {
 
 */
 
-app.get("/posts", async (_req, res) => {
+app.get("/api/posts", async (_req, res) => {
   // Get list of posts
   try {
     const result = await pool.query("SELECT * FROM posts ORDER BY id DESC"); // give me all the post in descending id order
@@ -76,24 +75,26 @@ app.get("/posts", async (_req, res) => {
   }
 });
 
-app.get("/posts/:uid", (_req, res) => {
+app.get("/api/posts/:id", (req, res) => {
   // Get post
+  // id will be in req.params.id
   res.send("to be implemented");
 });
 
-app.post("/posts", (_req, res) => {
+app.post("/api/posts", (req, res) => {
   // create post
+  console.log(req.body);
   res.send("to be implemented");
 });
 // some environments stop you returning any json in the body of a POST, and only allow the uid in the a response header
 // it you did want to return JSON in those cases you would have to use a PUT instead
 
-app.patch("/posts/:uid", (_req, res) => {
+app.put("/api/posts/:id", (_req, res) => {
   // update post
   res.send("to be implemented");
 });
 
-app.delete("/posts/:uid", (_req, res) => {
+app.delete("/api/posts/:id", (_req, res) => {
   // delete post
   res.send("to be implemented");
 });
